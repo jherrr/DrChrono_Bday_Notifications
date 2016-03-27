@@ -1,0 +1,16 @@
+<form action="/success" id="form" method="POST">
+    {% csrf_token %}
+
+
+
+    <input id="email" type="email" name="email" class="validate">
+    <label for="email">Email</label>
+
+
+
+
+
+    <a href="#" onclick="isEmail(document.getElementById('email').value)">Test</a>
+
+
+</form>

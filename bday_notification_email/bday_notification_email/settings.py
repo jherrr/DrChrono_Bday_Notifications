@@ -11,6 +11,12 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+import sys
+from pathlib import Path
+#getting modules to work, appending python path
+PROJECT_ROOT = os.path.dirname(str(Path(__file__).parent))
+sys.path.insert(0, os.path.join(PROJECT_ROOT, "api_keys"))
+
 import email_config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)

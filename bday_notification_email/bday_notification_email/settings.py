@@ -14,10 +14,10 @@ import os
 import sys
 from pathlib import Path
 #getting modules to work, appending python path
-PROJECT_ROOT = os.path.dirname(str(Path(__file__).parent))
-sys.path.insert(0, os.path.join(PROJECT_ROOT, "api_keys"))
+# PROJECT_ROOT = os.path.dirname(str(Path(__file__).parent))
+# sys.path.insert(0, os.path.join(PROJECT_ROOT, "api_keys"))
 
-import email_config
+from . import email_config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'send_email.apps.SendEmailConfig',
+    'djcelery',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -139,3 +140,14 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = email_config.host_user
 EMAIL_HOST_PASSWORD = email_config.host_password
+
+#Celery config
+BROKER_URL = "amqp://guest@localhost//"
+CELERY_ACCEPT_CONTENT = ['json']
+
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+CELERY_TIMEZONE = "US/Pacific"
+
+CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'

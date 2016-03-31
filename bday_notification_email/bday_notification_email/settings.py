@@ -146,6 +146,8 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = email_config.host_user
 EMAIL_HOST_PASSWORD = email_config.host_password
 
+TIME_ZONE = "US/Pacific"
+
 #Celery config
 BROKER_URL = "amqp://guest@localhost//"
 CELERY_ACCEPT_CONTENT = ['json']
@@ -153,6 +155,7 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
+CELERY_ENABLE_UTC = True
 CELERY_TIMEZONE = "US/Pacific"
 
 CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'

@@ -4,6 +4,7 @@ import django
 from django.conf import settings
 
 import datetime
+from pytz import timezone
 
 from send_email import tasks
 
@@ -24,7 +25,14 @@ week. Make sure that you read it. It is usually very informative.
 Cheers!
 ~ Yasoob
     """
+    utc = datetime.datetime.utcnow()
+    offset = datetime.timedelta(hours=7)
+
+    wait = datetime.timedelta(minutes=5)
+
+    tz = timezone("US/Pacific")
+    adjusted = utc + wait
 
     result = tasks.send_email.apply_async(args=[email, data]
-        , eta=datetime.datetime(2016, 3, 30, 7, 15))
+        , eta=adjusted)
     return render(request, 'success.html')

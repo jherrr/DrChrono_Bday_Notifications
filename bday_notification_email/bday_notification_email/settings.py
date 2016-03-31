@@ -17,7 +17,11 @@ from pathlib import Path
 # PROJECT_ROOT = os.path.dirname(str(Path(__file__).parent))
 # sys.path.insert(0, os.path.join(PROJECT_ROOT, "api_keys"))
 
+import djcelery
+djcelery.setup_loader()
 from . import email_config
+
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -48,8 +52,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'send_email.apps.SendEmailConfig',
+    'send_email',
     'djcelery',
+    'bday_notification_email',
 ]
 
 MIDDLEWARE_CLASSES = [

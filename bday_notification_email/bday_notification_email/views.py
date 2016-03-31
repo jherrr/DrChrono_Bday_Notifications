@@ -2,8 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import django
 from django.conf import settings
-from django.core.mail import send_mail
 
+import datetime
+
+from send_email import tasks
 
 def index(request):
     return render(request, 'index.html')
@@ -22,6 +24,7 @@ week. Make sure that you read it. It is usually very informative.
 Cheers!
 ~ Yasoob
     """
-    send_mail('Welcome!', data, "Yasoob",
-              [email], fail_silently=False)
+
+    result = tasks.send_email.apply_async(args=[email, data]
+        , eta=datetime.datetime(2016, 3, 30, 7, 15))
     return render(request, 'success.html')

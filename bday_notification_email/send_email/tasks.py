@@ -1,13 +1,10 @@
-from celery.decorators import task
-from celery.utils.log import get_task_logger
+from __future__ import absolute_import
 
-from .emails import send_feedback_email
+from celery import shared_task
+from django.core.mail import send_mail
 
-logger = get_task_logger(__name__)
+@shared_task
+def send_email(email, data):
 
-
-@task(name="send_feedback_email_task")
-def send_feedback_email_task(email, message):
-    """sends an email when feedback form is filled successfully"""
-    logger.info("Sent feedback email")
-    return send_feedback_email(email, message)
+    return send_mail('Welcome!', data, "Yasoob",
+              [email], fail_silently=False)

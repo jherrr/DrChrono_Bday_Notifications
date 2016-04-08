@@ -1,4 +1,5 @@
 email_config
+client_secrets
 
 env/
 
@@ -15,3 +16,4 @@ parts
 src/*.egg-info
 lib
 lib64
+

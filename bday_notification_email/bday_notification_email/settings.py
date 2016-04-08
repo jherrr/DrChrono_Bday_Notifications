@@ -19,6 +19,8 @@ from pathlib import Path
 
 import djcelery
 djcelery.setup_loader()
+from celery.schedules import crontab
+
 from . import email_config
 
 
@@ -53,7 +55,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'send_email',
+    'oauth2client',
     'djcelery',
+    'oauth2',
     'bday_notification_email',
 ]
 
@@ -159,3 +163,12 @@ CELERY_ENABLE_UTC = True
 CELERY_TIMEZONE = "US/Pacific"
 
 CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'
+
+CELERYBEAT_SCHEDULE = {
+    #test execute everyday specific time
+    'schedule-mail-every-day': {
+        'task': 'tasks.place_holder',
+        'schedule': crontab(hour = 19),
+        'args': "placeholder"
+    },
+}

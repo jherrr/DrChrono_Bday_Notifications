@@ -16,3 +16,7 @@ def mul(x, y):
 @shared_task
 def xsum(numbers):
     return sum(numbers)
+
+@shared_task
+def check_bdays_and_email():
+    

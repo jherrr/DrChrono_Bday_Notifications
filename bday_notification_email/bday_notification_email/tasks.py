@@ -19,4 +19,4 @@ def xsum(numbers):
 
 @shared_task
 def check_bdays_and_email():
-    
+    pass

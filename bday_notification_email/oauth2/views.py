@@ -5,8 +5,9 @@ from oauth2client.contrib.django_orm import Storage
 
 import os
 import httplib2
+import json
 
-from .models import FlowModel, CredentialsModel
+from .models import Doctor, FlowModel, CredentialsModel
 
 # appending python path, get client_secrets.json to work
 dir_name = os.path.dirname(__file__)
@@ -16,7 +17,7 @@ def auth_request(request):
 
     flow = flow_from_clientsecrets(
         os.path.join(dir_name, "client_secrets.json"),
-        scope="patients:summary:read",
+        scope="patients:read",
         redirect_uri="http://localhost:8000/oauth/auth_granted")
 
     auth_uri = flow.step1_get_authorize_url()
@@ -45,16 +46,22 @@ def auth_granted(request):
         flow = flow_obj.flow
 
         credentials = flow.step2_exchange(get_params["code"])
-        storage = Storage(CredentialsModel, 'session_id', session_key, "credential")
-        storage.put(credentials)
 
         http = httplib2.Http()
         http = credentials.authorize(http)
 
-        (resp, content) = http.request("https://drchrono.com/api/patients_summary",
-                    "GET")
+        (resp, content) = http.request("https://drchrono.com/api/users/current",
+        "GET")
 
-        print(content)
+        data = json.loads(content.decode("utf-8"))
+        print(data)
+
+        doctor_id = data['doctor']
+        doctor = Doctor(pk = doctor_id)
+        doctor.save()
+
+        storage = Storage(CredentialsModel, 'doctor_id', doctor_id, "credential")
+        storage.put(credentials)
 
     except ValueError as err:
         print('Handling run-time error: ', err)

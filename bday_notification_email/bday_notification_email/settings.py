@@ -54,11 +54,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'send_email',
-    'oauth2client',
     'djcelery',
-    'oauth2',
+    'oauth2client',
     'bday_notification_email',
+    'send_email',
+    'oauth2',
 ]
 
 MIDDLEWARE_CLASSES = [

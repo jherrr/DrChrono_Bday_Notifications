@@ -167,8 +167,7 @@ CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'
 CELERYBEAT_SCHEDULE = {
     #test execute everyday specific time
     'schedule-mail-every-day': {
-        'task': 'tasks.place_holder',
-        'schedule': crontab(hour = 19),
-        'args': "placeholder"
+        'task': 'bday_notification_email.tasks.check_bdays_and_email',
+        'schedule': crontab(hour = 20, minute = 47),
     },
 }
